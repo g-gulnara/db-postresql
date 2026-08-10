@@ -1,0 +1,181 @@
+{
+  "title": "MinIO & Backups",
+  "tags": ["minio", "backup"],
+  "timezone": "browser",
+  "schemaVersion": 38,
+  "version": 1,
+  "refresh": "30s",
+  "time": { "from": "now-6h", "to": "now" },
+  "panels": [
+    {
+      "id": 1,
+      "title": "Время последнего бэкапа",
+      "type": "stat",
+      "gridPos": { "x": 0, "y": 0, "w": 8, "h": 4 },
+      "options": {
+        "reduceOptions": { "calcs": ["lastNotNull"] },
+        "colorMode": "background",
+        "graphMode": "none",
+        "textMode": "value"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "dateTimeFromNow",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null },
+              { "color": "yellow", "value": 86400 },
+              { "color": "red", "value": 172800 }
+            ]
+          }
+        }
+      },
+      "targets": [
+        {
+          "expr": "backup_last_timestamp * 1000",
+          "legendFormat": "Последний бэкап"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Размер последнего бэкапа",
+      "type": "stat",
+      "gridPos": { "x": 8, "y": 0, "w": 8, "h": 4 },
+      "options": {
+        "reduceOptions": { "calcs": ["lastNotNull"] },
+        "colorMode": "background",
+        "graphMode": "none"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "bytes",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [{ "color": "blue", "value": null }]
+          }
+        }
+      },
+      "targets": [
+        {
+          "expr": "backup_last_size_bytes",
+          "legendFormat": "Размер"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Использование дискового пространства MinIO",
+      "type": "stat",
+      "gridPos": { "x": 16, "y": 0, "w": 8, "h": 4 },
+      "options": {
+        "reduceOptions": { "calcs": ["lastNotNull"] },
+        "colorMode": "background",
+        "graphMode": "none"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "bytes",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null },
+              { "color": "yellow", "value": 1073741824 },
+              { "color": "red", "value": 5368709120 }
+            ]
+          }
+        }
+      },
+      "targets": [
+        {
+          "expr": "minio_cluster_usage_total_bytes",
+          "legendFormat": "Занято"
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "title": "Размер бэкапов по времени",
+      "type": "timeseries",
+      "gridPos": { "x": 0, "y": 4, "w": 12, "h": 8 },
+      "options": { "legend": { "displayMode": "list", "placement": "bottom" } },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "bytes",
+          "color": { "mode": "palette-classic" },
+          "custom": { "lineWidth": 2, "fillOpacity": 10 }
+        }
+      },
+      "targets": [
+        {
+          "expr": "backup_last_size_bytes",
+          "legendFormat": "Размер бэкапа"
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "title": "MinIO — входящий / исходящий трафик",
+      "type": "timeseries",
+      "gridPos": { "x": 12, "y": 4, "w": 12, "h": 8 },
+      "options": { "legend": { "displayMode": "list", "placement": "bottom" } },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "binBps",
+          "color": { "mode": "palette-classic" },
+          "custom": { "lineWidth": 2, "fillOpacity": 10 }
+        }
+      },
+      "targets": [
+        {
+          "expr": "rate(minio_cluster_http_received_bytes_total[5m])",
+          "legendFormat": "Получено"
+        },
+        {
+          "expr": "rate(minio_cluster_http_sent_bytes_total[5m])",
+          "legendFormat": "Отправлено"
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "title": "MinIO — количество объектов",
+      "type": "timeseries",
+      "gridPos": { "x": 0, "y": 12, "w": 12, "h": 8 },
+      "options": { "legend": { "displayMode": "list", "placement": "bottom" } },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "palette-classic" },
+          "custom": { "lineWidth": 2, "fillOpacity": 10 }
+        }
+      },
+      "targets": [
+        {
+          "expr": "minio_cluster_usage_object_total",
+          "legendFormat": "Объектов"
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "title": "MinIO — запросы S3 API",
+      "type": "timeseries",
+      "gridPos": { "x": 12, "y": 12, "w": 12, "h": 8 },
+      "options": { "legend": { "displayMode": "list", "placement": "bottom" } },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "reqps",
+          "color": { "mode": "palette-classic" },
+          "custom": { "lineWidth": 2, "fillOpacity": 10 }
+        }
+      },
+      "targets": [
+        {
+          "expr": "rate(minio_s3_requests_total[5m])",
+          "legendFormat": "{{api}}"
+        }
+      ]
+    }
+  ]
+}

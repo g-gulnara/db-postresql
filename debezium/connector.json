@@ -1,0 +1,16 @@
+{
+  "connector.class": "io.debezium.connector.postgresql.PostgresConnector",
+  "plugin.name": "pgoutput",
+  "database.hostname": "haproxy",
+  "database.port": "5000",
+  "database.user": "debezium_user",
+  "database.password": "debezium_password",
+  "database.dbname": "library",
+  "topic.prefix": "library",
+  "table.include.list": "public.fines",
+  "slot.name": "debezium_fines_slot",
+  "publication.name": "debezium_fines_pub",
+  "snapshot.mode": "initial",
+  "heartbeat.interval.ms": "5000",
+  "decimal.handling.mode": "string"
+}

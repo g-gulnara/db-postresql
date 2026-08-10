@@ -1,0 +1,203 @@
+{
+  "title": "Patroni Chaos Monitoring",
+  "uid": "patroni-chaos",
+  "timezone": "browser",
+  "refresh": "5s",
+  "time": { "from": "now-15m", "to": "now" },
+  "panels": [
+    {
+      "id": 1,
+      "title": "Node Role (1 = Leader / Primary)",
+      "type": "stat",
+      "gridPos": { "x": 0, "y": 0, "w": 6, "h": 4 },
+      "targets": [
+        {
+          "expr": "patroni_primary",
+          "legendFormat": "{{instance}}"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [
+            { "type": "value", "options": { "1": { "text": "PRIMARY", "color": "green" }, "0": { "text": "REPLICA", "color": "blue" } } }
+          ],
+          "thresholds": {
+            "steps": [
+              { "value": 0, "color": "blue" },
+              { "value": 1, "color": "green" }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": 2,
+      "title": "Node Up/Down",
+      "type": "stat",
+      "gridPos": { "x": 6, "y": 0, "w": 6, "h": 4 },
+      "targets": [
+        {
+          "expr": "up{job=~\"patroni.*\"}",
+          "legendFormat": "{{instance}}"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [
+            { "type": "value", "options": { "1": { "text": "UP", "color": "green" }, "0": { "text": "DOWN", "color": "red" } } }
+          ],
+          "thresholds": {
+            "steps": [
+              { "value": 0, "color": "red" },
+              { "value": 1, "color": "green" }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": 3,
+      "title": "Streaming Replication Active",
+      "type": "stat",
+      "gridPos": { "x": 12, "y": 0, "w": 6, "h": 4 },
+      "targets": [
+        {
+          "expr": "patroni_postgres_streaming",
+          "legendFormat": "{{instance}}"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [
+            { "type": "value", "options": { "1": { "text": "STREAMING", "color": "green" }, "0": { "text": "NOT STREAMING", "color": "red" } } }
+          ]
+        }
+      }
+    },
+    {
+      "id": 4,
+      "title": "DCS (etcd) Last Seen — seconds ago",
+      "type": "stat",
+      "gridPos": { "x": 18, "y": 0, "w": 6, "h": 4 },
+      "targets": [
+        {
+          "expr": "time() - patroni_dcs_last_seen",
+          "legendFormat": "{{instance}}"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s",
+          "thresholds": {
+            "steps": [
+              { "value": 0,  "color": "green" },
+              { "value": 10, "color": "yellow" },
+              { "value": 30, "color": "red" }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": 5,
+      "title": "Node Role Over Time",
+      "type": "timeseries",
+      "gridPos": { "x": 0, "y": 4, "w": 12, "h": 8 },
+      "targets": [
+        {
+          "expr": "patroni_primary",
+          "legendFormat": "{{instance}} — leader"
+        },
+        {
+          "expr": "patroni_replica",
+          "legendFormat": "{{instance}} — replica"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "min": 0, "max": 1,
+          "custom": { "lineWidth": 2, "fillOpacity": 20 }
+        }
+      }
+    },
+    {
+      "id": 6,
+      "title": "DCS Last Seen (etcd connectivity)",
+      "type": "timeseries",
+      "gridPos": { "x": 12, "y": 4, "w": 12, "h": 8 },
+      "targets": [
+        {
+          "expr": "time() - patroni_dcs_last_seen",
+          "legendFormat": "{{instance}} — seconds since last DCS contact"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s",
+          "thresholds": {
+            "steps": [
+              { "value": 0,  "color": "green" },
+              { "value": 10, "color": "yellow" },
+              { "value": 30, "color": "red" }
+            ]
+          },
+          "custom": { "lineWidth": 2, "fillOpacity": 10 }
+        }
+      }
+    },
+    {
+      "id": 7,
+      "title": "PostgreSQL Up (via postgres-exporter)",
+      "type": "timeseries",
+      "gridPos": { "x": 0, "y": 12, "w": 12, "h": 8 },
+      "targets": [
+        {
+          "expr": "pg_up",
+          "legendFormat": "PostgreSQL up"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "min": 0, "max": 1,
+          "custom": { "lineWidth": 2, "fillOpacity": 20 }
+        }
+      }
+    },
+    {
+      "id": 8,
+      "title": "Replication Lag (bytes)",
+      "type": "timeseries",
+      "gridPos": { "x": 12, "y": 12, "w": 12, "h": 8 },
+      "targets": [
+        {
+          "expr": "pg_stat_replication_pg_wal_lsn_diff",
+          "legendFormat": "{{client_addr}} lag"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "bytes",
+          "custom": { "lineWidth": 2 }
+        }
+      }
+    },
+    {
+      "id": 9,
+      "title": "HAProxy Backend Status",
+      "type": "timeseries",
+      "gridPos": { "x": 0, "y": 20, "w": 24, "h": 8 },
+      "targets": [
+        {
+          "expr": "up{job=\"haproxy_pg_primary\"}",
+          "legendFormat": "{{instance}}"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "min": 0, "max": 1,
+          "custom": { "lineWidth": 2, "fillOpacity": 20 }
+        }
+      }
+    }
+  ]
+}

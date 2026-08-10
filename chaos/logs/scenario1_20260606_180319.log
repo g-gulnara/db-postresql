@@ -1,0 +1,100 @@
+[18:03:20] === BEFORE FAILURE ===
+[18:03:20] Cluster state (Patroni REST API):
+[18:03:20] Current primary node:
+[18:03:21] Primary: unknown
+[18:03:21] HAProxy stats (port 7000):
+[18:03:21] PostgreSQL connectivity check:
+chaos/kill_primary_1.sh: line 27: psql: command not found
+[18:03:21] 
+[18:03:21] === INJECTING FAILURE: stopping primary container ===
+[18:03:22] Stopping container: m3201_gareevagr-patroni1-1
+[18:03:24] Container m3201_gareevagr-patroni1-1 stopped at 18:03:24
+[18:03:24] 
+[18:03:24] === MONITORING FAILOVER ===
+[18:03:24] Watching cluster state every 3 seconds for 60 seconds...
+[18:03:28] --- t+6s ---
+[18:03:28] patroni2 health: {"state": "running", "postmaster_start_time": "2026-06-06 14:54:24.403080+00:00", "role": "primary", "server_version": 170010, "xlog": {"location": 91402768}, "timeline": 4, "dcs_last_seen": 1780758206, "database_system_identifier": "7642412804138123312", "patroni": {"version": "4.1.3", "scope": "library-cluster", "name": "patroni2"}}
+[18:03:28] patroni2 role: unknown
+[18:03:28] HAProxy connection: chaos/kill_primary_1.sh: line 63: psql: command not found
+CONNECTION FAILED
+[18:03:32] --- t+10s ---
+[18:03:32] patroni2 health: {"state": "running", "postmaster_start_time": "2026-06-06 14:54:24.403080+00:00", "role": "primary", "server_version": 170010, "xlog": {"location": 91402768}, "timeline": 4, "dcs_last_seen": 1780758208, "database_system_identifier": "7642412804138123312", "patroni": {"version": "4.1.3", "scope": "library-cluster", "name": "patroni2"}}
+[18:03:32] patroni2 role: unknown
+[18:03:32] HAProxy connection: chaos/kill_primary_1.sh: line 63: psql: command not found
+CONNECTION FAILED
+[18:03:35] --- t+13s ---
+[18:03:36] patroni2 health: {"state": "running", "postmaster_start_time": "2026-06-06 14:54:24.403080+00:00", "role": "primary", "server_version": 170010, "xlog": {"location": 91402768}, "timeline": 4, "dcs_last_seen": 1780758212, "database_system_identifier": "7642412804138123312", "patroni": {"version": "4.1.3", "scope": "library-cluster", "name": "patroni2"}}
+[18:03:36] patroni2 role: unknown
+[18:03:36] HAProxy connection: chaos/kill_primary_1.sh: line 63: psql: command not found
+CONNECTION FAILED
+[18:03:39] --- t+17s ---
+[18:03:39] patroni2 health: {"state": "running", "postmaster_start_time": "2026-06-06 14:54:24.403080+00:00", "role": "primary", "server_version": 170010, "xlog": {"location": 91402768}, "timeline": 4, "dcs_last_seen": 1780758216, "database_system_identifier": "7642412804138123312", "patroni": {"version": "4.1.3", "scope": "library-cluster", "name": "patroni2"}}
+[18:03:40] patroni2 role: unknown
+[18:03:40] HAProxy connection: chaos/kill_primary_1.sh: line 63: psql: command not found
+CONNECTION FAILED
+[18:03:43] --- t+21s ---
+[18:03:43] patroni2 health: {"state": "running", "postmaster_start_time": "2026-06-06 14:54:24.403080+00:00", "role": "primary", "server_version": 170010, "xlog": {"location": 91402768}, "timeline": 4, "dcs_last_seen": 1780758220, "database_system_identifier": "7642412804138123312", "patroni": {"version": "4.1.3", "scope": "library-cluster", "name": "patroni2"}}
+[18:03:44] patroni2 role: unknown
+[18:03:44] HAProxy connection: chaos/kill_primary_1.sh: line 63: psql: command not found
+CONNECTION FAILED
+[18:03:47] --- t+25s ---
+[18:03:47] patroni2 health: {"state": "running", "postmaster_start_time": "2026-06-06 14:54:24.403080+00:00", "role": "primary", "server_version": 170010, "xlog": {"location": 91402768}, "timeline": 4, "dcs_last_seen": 1780758226, "database_system_identifier": "7642412804138123312", "patroni": {"version": "4.1.3", "scope": "library-cluster", "name": "patroni2"}}
+[18:03:47] patroni2 role: unknown
+[18:03:47] HAProxy connection: chaos/kill_primary_1.sh: line 63: psql: command not found
+CONNECTION FAILED
+[18:03:50] --- t+28s ---
+[18:03:50] patroni2 health: {"state": "running", "postmaster_start_time": "2026-06-06 14:54:24.403080+00:00", "role": "primary", "server_version": 170010, "xlog": {"location": 91402768}, "timeline": 4, "dcs_last_seen": 1780758227, "database_system_identifier": "7642412804138123312", "patroni": {"version": "4.1.3", "scope": "library-cluster", "name": "patroni2"}}
+[18:03:51] patroni2 role: unknown
+[18:03:51] HAProxy connection: chaos/kill_primary_1.sh: line 63: psql: command not found
+CONNECTION FAILED
+[18:03:54] --- t+32s ---
+[18:03:54] patroni2 health: {"state": "running", "postmaster_start_time": "2026-06-06 14:54:24.403080+00:00", "role": "primary", "server_version": 170010, "xlog": {"location": 91402768}, "timeline": 4, "dcs_last_seen": 1780758231, "database_system_identifier": "7642412804138123312", "patroni": {"version": "4.1.3", "scope": "library-cluster", "name": "patroni2"}}
+[18:03:55] patroni2 role: unknown
+[18:03:55] HAProxy connection: chaos/kill_primary_1.sh: line 63: psql: command not found
+CONNECTION FAILED
+[18:03:58] --- t+36s ---
+[18:03:58] patroni2 health: {"state": "running", "postmaster_start_time": "2026-06-06 14:54:24.403080+00:00", "role": "primary", "server_version": 170010, "xlog": {"location": 91402768}, "timeline": 4, "dcs_last_seen": 1780758236, "database_system_identifier": "7642412804138123312", "patroni": {"version": "4.1.3", "scope": "library-cluster", "name": "patroni2"}}
+[18:03:59] patroni2 role: unknown
+[18:03:59] HAProxy connection: chaos/kill_primary_1.sh: line 63: psql: command not found
+CONNECTION FAILED
+[18:04:02] --- t+40s ---
+[18:04:02] patroni2 health: {"state": "running", "postmaster_start_time": "2026-06-06 14:54:24.403080+00:00", "role": "primary", "server_version": 170010, "xlog": {"location": 91402768}, "timeline": 4, "dcs_last_seen": 1780758238, "database_system_identifier": "7642412804138123312", "patroni": {"version": "4.1.3", "scope": "library-cluster", "name": "patroni2"}}
+[18:04:03] patroni2 role: unknown
+[18:04:03] HAProxy connection: chaos/kill_primary_1.sh: line 63: psql: command not found
+CONNECTION FAILED
+[18:04:06] --- t+44s ---
+[18:04:06] patroni2 health: {"state": "running", "postmaster_start_time": "2026-06-06 14:54:24.403080+00:00", "role": "primary", "server_version": 170010, "xlog": {"location": 91402768}, "timeline": 4, "dcs_last_seen": 1780758242, "database_system_identifier": "7642412804138123312", "patroni": {"version": "4.1.3", "scope": "library-cluster", "name": "patroni2"}}
+[18:04:06] patroni2 role: unknown
+[18:04:06] HAProxy connection: chaos/kill_primary_1.sh: line 63: psql: command not found
+CONNECTION FAILED
+[18:04:10] --- t+48s ---
+[18:04:10] patroni2 health: {"state": "running", "postmaster_start_time": "2026-06-06 14:54:24.403080+00:00", "role": "primary", "server_version": 170010, "xlog": {"location": 91402768}, "timeline": 4, "dcs_last_seen": 1780758246, "database_system_identifier": "7642412804138123312", "patroni": {"version": "4.1.3", "scope": "library-cluster", "name": "patroni2"}}
+[18:04:10] patroni2 role: unknown
+[18:04:10] HAProxy connection: chaos/kill_primary_1.sh: line 63: psql: command not found
+CONNECTION FAILED
+[18:04:13] --- t+51s ---
+[18:04:13] patroni2 health: {"state": "running", "postmaster_start_time": "2026-06-06 14:54:24.403080+00:00", "role": "primary", "server_version": 170010, "xlog": {"location": 91402768}, "timeline": 4, "dcs_last_seen": 1780758250, "database_system_identifier": "7642412804138123312", "patroni": {"version": "4.1.3", "scope": "library-cluster", "name": "patroni2"}}
+[18:04:14] patroni2 role: unknown
+[18:04:14] HAProxy connection: chaos/kill_primary_1.sh: line 63: psql: command not found
+CONNECTION FAILED
+[18:04:17] --- t+55s ---
+[18:04:17] patroni2 health: {"state": "running", "postmaster_start_time": "2026-06-06 14:54:24.403080+00:00", "role": "primary", "server_version": 170010, "xlog": {"location": 91402768}, "timeline": 4, "dcs_last_seen": 1780758256, "database_system_identifier": "7642412804138123312", "patroni": {"version": "4.1.3", "scope": "library-cluster", "name": "patroni2"}}
+[18:04:18] patroni2 role: unknown
+[18:04:18] HAProxy connection: chaos/kill_primary_1.sh: line 63: psql: command not found
+CONNECTION FAILED
+[18:04:21] --- t+59s ---
+[18:04:21] patroni2 health: {"state": "running", "postmaster_start_time": "2026-06-06 14:54:24.403080+00:00", "role": "primary", "server_version": 170010, "xlog": {"location": 91402768}, "timeline": 4, "dcs_last_seen": 1780758257, "database_system_identifier": "7642412804138123312", "patroni": {"version": "4.1.3", "scope": "library-cluster", "name": "patroni2"}}
+[18:04:21] patroni2 role: unknown
+[18:04:21] HAProxy connection: chaos/kill_primary_1.sh: line 63: psql: command not found
+CONNECTION FAILED
+[18:04:25] --- t+63s ---
+[18:04:25] patroni2 health: {"state": "running", "postmaster_start_time": "2026-06-06 14:54:24.403080+00:00", "role": "primary", "server_version": 170010, "xlog": {"location": 91402768}, "timeline": 4, "dcs_last_seen": 1780758261, "database_system_identifier": "7642412804138123312", "patroni": {"version": "4.1.3", "scope": "library-cluster", "name": "patroni2"}}
+[18:04:25] patroni2 role: unknown
+[18:04:25] HAProxy connection: chaos/kill_primary_1.sh: line 63: psql: command not found
+CONNECTION FAILED
+[18:04:28] --- t+66s ---
+[18:04:28] patroni2 health: {"state": "running", "postmaster_start_time": "2026-06-06 14:54:24.403080+00:00", "role": "primary", "server_version": 170010, "xlog": {"location": 91402768}, "timeline": 4, "dcs_last_seen": 1780758266, "database_system_identifier": "7642412804138123312", "patroni": {"version": "4.1.3", "scope": "library-cluster", "name": "patroni2"}}
+[18:04:29] patroni2 role: unknown
+[18:04:29] HAProxy connection: chaos/kill_primary_1.sh: line 63: psql: command not found
+CONNECTION FAILED
+[18:04:32] --- t+70s ---

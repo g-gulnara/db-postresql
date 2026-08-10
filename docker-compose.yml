@@ -1,0 +1,319 @@
+services:
+
+  etcd:
+    image: quay.io/coreos/etcd:v3.5.12
+    command:
+      - /usr/local/bin/etcd
+      - --name=etcd
+      - --initial-advertise-peer-urls=http://etcd:2380
+      - --listen-peer-urls=http://0.0.0.0:2380
+      - --listen-client-urls=http://0.0.0.0:2379
+      - --advertise-client-urls=http://etcd:2379
+      - --initial-cluster=etcd=http://etcd:2380
+      - --initial-cluster-state=new
+      - --initial-cluster-token=library-etcd-token
+    ports:
+      - "2379:2379"
+    volumes:
+      - etcd_data:/etcd-data
+    healthcheck:
+      test: ["CMD", "etcdctl", "endpoint", "health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  patroni1:
+    build: ./patroni
+    mem_limit: 800m
+    mem_reservation: 600m
+    environment:
+      POSTGRESQL_SHARED_BUFFERS: 256MB
+      POSTGRESQL_WORK_MEM: 8MB
+      POSTGRESQL_EFFECTIVE_CACHE_SIZE: 512MB
+      PATRONI_NAME: patroni1
+      PATRONI_ETCD3_HOSTS: etcd:2379
+      PATRONI_SCOPE: library-cluster
+      PATRONI_POSTGRESQL_LISTEN: 0.0.0.0:5432
+      PATRONI_RESTAPI_LISTEN: 0.0.0.0:8008
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      REPLICATOR_PASSWORD: ${REPLICATOR_PASSWORD}
+    volumes:
+      - pg_data1:/var/lib/postgresql/data
+    depends_on:
+      etcd:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-sf", "http://localhost:8008/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 60s
+    ports:
+      - "8008:8008"
+
+  patroni2:
+    build: ./patroni
+    mem_limit: 800m
+    mem_reservation: 600m
+    environment:
+    
+      PATRONI_NAME: patroni2
+      PATRONI_ETCD3_HOSTS: etcd:2379
+      PATRONI_SCOPE: library-cluster
+      PATRONI_POSTGRESQL_LISTEN: 0.0.0.0:5432
+      PATRONI_RESTAPI_LISTEN: 0.0.0.0:8008
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      REPLICATOR_PASSWORD: ${REPLICATOR_PASSWORD}
+      POSTGRESQL_SHARED_BUFFERS: 256MB
+      POSTGRESQL_WORK_MEM: 8MB
+      POSTGRESQL_EFFECTIVE_CACHE_SIZE: 512MB
+    volumes:
+      - pg_data2:/var/lib/postgresql/data
+    depends_on:
+      etcd:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-sf", "http://localhost:8008/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 60s
+    ports:
+      - "8009:8008"
+
+  haproxy:
+    image: haproxy:2.9-alpine
+    volumes:
+      - ./haproxy/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro
+    ports:
+
+      - "5000:5000"
+      - "5001:5001"
+      - "5432:5000"
+      - "7000:7000"
+    depends_on:
+      patroni1:
+        condition: service_healthy
+      patroni2:
+        condition: service_healthy
+
+  migrations:
+    build: .
+    depends_on:
+      haproxy:
+        condition: service_started
+      patroni1:
+        condition: service_healthy
+      patroni2:
+        condition: service_healthy
+    environment:
+      POSTGRES_HOST: haproxy
+      POSTGRES_PORT: 5000
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_TEST_DB: ${POSTGRES_TEST_DB}
+      MIGRATION_VERSION: ${MIGRATION_VERSION}
+      SEED_COUNT: ${SEED_COUNT:-10}
+      SEED_VERSION: ${SEED_VERSION:-v1}
+      APP_ENV: ${APP_ENV:-dev}
+
+  minio:
+    image: minio/minio:latest
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
+      MINIO_PROMETHEUS_AUTH_TYPE: public
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - minio_data:/data
+    healthcheck:
+      test: ["CMD", "mc", "ready", "local"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backup:
+    build: ./backup
+    depends_on:
+      minio:
+        condition: service_healthy
+      migrations:
+        condition: service_completed_successfully
+    environment:
+      POSTGRES_HOST: haproxy
+      POSTGRES_PORT: 5000
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      MINIO_HOST: minio
+      MINIO_PORT: 9000
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
+      BUCKET_BACKUP_NAME: ${BUCKET_BACKUP_NAME:-backups}
+      BACKUP_RETENTION_COUNT: ${BACKUP_RETENTION_COUNT:-5}
+      BACKUP_INTERVAL: ${BACKUP_INTERVAL:-0 2 * * *}
+    ports:
+      - "9200:9200"
+
+  postgres-exporter:
+    image: prometheuscommunity/postgres-exporter:latest
+    environment:
+      DATA_SOURCE_NAME: "postgresql://${MONITORING_USER}:${MONITORING_PASSWORD}@haproxy:5000/${POSTGRES_DB}?sslmode=disable"
+    ports:
+      - "9187:9187"
+    depends_on:
+      haproxy:
+        condition: service_started
+
+  prometheus:
+    image: prom/prometheus:latest
+    volumes:
+      - ./monitoring/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+    ports:
+      - "9090:9090"
+    depends_on:
+      - postgres-exporter
+
+  grafana:
+    image: grafana/grafana:latest
+    environment:
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: admin
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./monitoring/grafana/provisioning:/etc/grafana/provisioning
+      - ./monitoring/grafana/dashboards:/var/lib/grafana/dashboards
+    ports:
+      - "3000:3000"
+    depends_on:
+      - prometheus
+  pumba:
+    image: gaiaadm/pumba:latest
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    profiles: ["chaos"]
+  
+  kafka:
+    image: apache/kafka:3.7.0
+    environment:
+      KAFKA_NODE_ID: 1
+      KAFKA_PROCESS_ROLES: broker,controller
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092,CONTROLLER://0.0.0.0:9093
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,CONTROLLER:PLAINTEXT
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka:9093
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+      KAFKA_LOG_DIRS: /var/lib/kafka/data
+      CLUSTER_ID: MkU3OEVBNTcwNTJENDM2Qk
+    volumes:
+      - kafka_data:/var/lib/kafka/data
+    ports:
+      - "9092:9092"
+    healthcheck:
+      test: ["CMD", "/opt/kafka/bin/kafka-broker-api-versions.sh", "--bootstrap-server", "localhost:9092"]
+      interval: 15s
+      timeout: 10s
+      retries: 10
+      start_period: 30s
+
+  kafka-ui:
+    image: provectuslabs/kafka-ui:latest
+    environment:
+      KAFKA_CLUSTERS_0_NAME: local
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:9092
+    ports:
+      - "8080:8080"
+    depends_on:
+      kafka:
+        condition: service_healthy
+
+  kafka-connect:
+    image: quay.io/debezium/connect:2.7
+    environment:
+      BOOTSTRAP_SERVERS: kafka:9092
+      GROUP_ID: library-connect-group
+      CONFIG_STORAGE_TOPIC: connect-configs
+      OFFSET_STORAGE_TOPIC: connect-offsets
+      STATUS_STORAGE_TOPIC: connect-statuses
+      CONFIG_STORAGE_REPLICATION_FACTOR: 1
+      OFFSET_STORAGE_REPLICATION_FACTOR: 1
+      STATUS_STORAGE_REPLICATION_FACTOR: 1
+      KEY_CONVERTER: org.apache.kafka.connect.json.JsonConverter
+      VALUE_CONVERTER: org.apache.kafka.connect.json.JsonConverter
+      KEY_CONVERTER_SCHEMAS_ENABLE: "false"
+      VALUE_CONVERTER_SCHEMAS_ENABLE: "false"
+    ports:
+      - "8083:8083"
+    depends_on:
+      kafka:
+        condition: service_healthy
+      haproxy:
+        condition: service_started
+    healthcheck:
+      test: ["CMD", "curl", "-sf", "http://localhost:8083/connectors"]
+      interval: 15s
+      timeout: 10s
+      retries: 10
+      start_period: 60s
+
+  clickhouse:
+    image: clickhouse/clickhouse-server:24.3
+    environment:
+      CLICKHOUSE_USER: default
+      CLICKHOUSE_PASSWORD: clickhouse
+      CLICKHOUSE_DEFAULT_ACCESS_MANAGEMENT: 1
+    volumes:
+      - ./clickhouse/config.xml:/etc/clickhouse-server/config.d/custom.xml:ro
+      - ./clickhouse/users.xml:/etc/clickhouse-server/users.d/custom_users.xml:ro
+      - ./clickhouse/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+      - clickhouse_data:/var/lib/clickhouse
+    ports:
+      - "8123:8123"
+      - "9009:9000"
+    healthcheck:
+      test: ["CMD", "clickhouse-client", "--query", "SELECT 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+  metabase:
+    image: metabase/metabase:latest
+    environment:
+      MB_DB_TYPE: postgres
+      MB_DB_DBNAME: ${METABASE_DB:-metabase}
+      MB_DB_PORT: 5000
+      MB_DB_USER: ${METABASE_USER:-metabase_user}
+      MB_DB_PASS: ${METABASE_PASSWORD:-metabase_password}
+      MB_DB_HOST: haproxy
+    ports:
+      - "3001:3000"
+    depends_on:
+      clickhouse:
+        condition: service_healthy
+      haproxy:
+        condition: service_started
+
+
+volumes:
+  etcd_data:
+  pg_data1:
+  pg_data2:
+  minio_data:
+  prometheus_data:
+  grafana_data:
+  kafka_data:
+  clickhouse_data:

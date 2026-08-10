@@ -1,0 +1,88 @@
+[18:15:40] === BEFORE FAILURE ===
+[18:15:41] patroni1 role: unreachable
+[18:15:41] patroni2 role: unreachable
+[18:15:41] PostgreSQL check (via docker exec patroni2):
+[18:15:42] psql: error: connection to server on socket "/var/run/postgresql/.s.PGSQL.5432" failed: FATAL:  role "postgres" does not exist
+CONNECTION FAILED
+[18:15:42] 
+[18:15:42] === INJECTING FAILURE: stopping m3201_gareevagr-patroni1-1 ===
+[18:15:45] Stopped at 18:15:45
+[18:15:45] 
+[18:15:45] === MONITORING FAILOVER (60s) ===
+[18:15:48] --- t+6s ---
+[18:15:48] patroni2 role: unreachable
+[18:15:49] HAProxy→PG: Password for user postgres: 
+psql: error: connection to server at "haproxy" (172.19.0.6), port 5000 failed: fe_sendauth: no password supplied
+CONNECTION FAILED
+[18:15:52] --- t+10s ---
+[18:15:52] patroni2 role: unreachable
+[18:15:53] HAProxy→PG: Password for user postgres: 
+psql: error: connection to server at "haproxy" (172.19.0.6), port 5000 failed: fe_sendauth: no password supplied
+CONNECTION FAILED
+[18:15:56] --- t+14s ---
+[18:15:56] patroni2 role: unreachable
+[18:15:57] HAProxy→PG: Password for user postgres: 
+psql: error: connection to server at "haproxy" (172.19.0.6), port 5000 failed: fe_sendauth: no password supplied
+CONNECTION FAILED
+[18:16:00] --- t+18s ---
+[18:16:01] patroni2 role: unreachable
+[18:16:01] HAProxy→PG: Password for user postgres: 
+psql: error: connection to server at "haproxy" (172.19.0.6), port 5000 failed: fe_sendauth: no password supplied
+CONNECTION FAILED
+[18:16:04] --- t+22s ---
+[18:16:05] patroni2 role: unreachable
+[18:16:05] HAProxy→PG: Password for user postgres: 
+psql: error: connection to server at "haproxy" (172.19.0.6), port 5000 failed: fe_sendauth: no password supplied
+CONNECTION FAILED
+[18:16:09] --- t+27s ---
+[18:16:09] patroni2 role: unreachable
+[18:16:10] HAProxy→PG: Password for user postgres: 
+psql: error: connection to server at "haproxy" (172.19.0.6), port 5000 failed: fe_sendauth: no password supplied
+CONNECTION FAILED
+[18:16:13] --- t+31s ---
+[18:16:13] patroni2 role: unreachable
+[18:16:14] HAProxy→PG: Password for user postgres: 
+psql: error: connection to server at "haproxy" (172.19.0.6), port 5000 failed: fe_sendauth: no password supplied
+CONNECTION FAILED
+[18:16:17] --- t+35s ---
+[18:16:17] patroni2 role: unreachable
+[18:16:18] HAProxy→PG: Password for user postgres: 
+psql: error: connection to server at "haproxy" (172.19.0.6), port 5000 failed: fe_sendauth: no password supplied
+CONNECTION FAILED
+[18:16:21] --- t+39s ---
+[18:16:21] patroni2 role: unreachable
+[18:16:22] HAProxy→PG: Password for user postgres: 
+psql: error: connection to server at "haproxy" (172.19.0.6), port 5000 failed: fe_sendauth: no password supplied
+CONNECTION FAILED
+[18:16:25] --- t+43s ---
+[18:16:25] patroni2 role: unreachable
+[18:16:26] HAProxy→PG: Password for user postgres: 
+psql: error: connection to server at "haproxy" (172.19.0.6), port 5000 failed: fe_sendauth: no password supplied
+CONNECTION FAILED
+[18:16:29] --- t+47s ---
+[18:16:29] patroni2 role: unreachable
+[18:16:30] HAProxy→PG: Password for user postgres: 
+psql: error: connection to server at "haproxy" (172.19.0.6), port 5000 failed: fe_sendauth: no password supplied
+CONNECTION FAILED
+[18:16:33] --- t+51s ---
+[18:16:33] patroni2 role: unreachable
+[18:16:33] HAProxy→PG: Password for user postgres: 
+psql: error: connection to server at "haproxy" (172.19.0.6), port 5000 failed: fe_sendauth: no password supplied
+CONNECTION FAILED
+[18:16:37] --- t+54s ---
+[18:16:37] patroni2 role: unreachable
+[18:16:37] HAProxy→PG: Password for user postgres: 
+psql: error: connection to server at "haproxy" (172.19.0.6), port 5000 failed: fe_sendauth: no password supplied
+CONNECTION FAILED
+[18:16:40] --- t+58s ---
+[18:16:40] patroni2 role: unreachable
+[18:16:41] HAProxy→PG: Password for user postgres: 
+psql: error: connection to server at "haproxy" (172.19.0.6), port 5000 failed: fe_sendauth: no password supplied
+CONNECTION FAILED
+[18:16:44] --- t+62s ---
+[18:16:44] patroni2 role: unreachable
+[18:16:45] HAProxy→PG: Password for user postgres: 
+psql: error: connection to server at "haproxy" (172.19.0.6), port 5000 failed: fe_sendauth: no password supplied
+CONNECTION FAILED
+[18:16:48] --- t+66s ---
+[18:16:48] patroni2 role: unreachable

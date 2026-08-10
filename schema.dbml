@@ -1,0 +1,123 @@
+Table books {
+  id integer [primary key]
+    title varchar [not null]
+      publisher_id integer
+        language_id integer
+          published_year integer
+          }
+
+          Table authors {
+            id integer [primary key]
+              full_name varchar [not null]
+                biography text
+                }
+
+                Table book_authors {
+                  book_id integer
+                    author_id integer
+                      primary key (book_id, author_id)
+                      }
+
+                      Table genres {
+                        id integer [primary key]
+                          name varchar [unique]
+                          }
+
+                          Table book_genres {
+                            book_id integer
+                              genre_id integer
+                                primary key (book_id, genre_id)
+                                }
+
+                                Table publishers {
+                                  id integer [primary key]
+                                    name varchar
+                                      address varchar
+                                      }
+
+                                      Table languages {
+                                        id integer [primary key]
+                                          name varchar
+                                          }
+
+
+                                          Table book_items {
+                                            id integer [primary key]
+                                              book_id integer
+                                                inventory_number varchar [unique]
+                                                  status_id integer
+                                                    location_id integer
+                                                    }
+
+                                                    Table item_statuses {
+                                                      id integer [primary key]
+                                                        status_name varchar
+                                                        }
+
+                                                        Table locations {
+                                                          id integer [primary key]
+                                                            hall_number integer
+                                                              shelf_number integer
+                                                              }
+
+                                                              Table readers {
+                                                                id integer [primary key]
+                                                                  library_card varchar [unique]
+                                                                    full_name varchar
+                                                                      phone varchar
+                                                                        email varchar
+                                                                        }
+
+                                                                        Table staff {
+                                                                          id integer [primary key]
+                                                                            full_name varchar
+                                                                              role_id integer
+                                                                              }
+
+                                                                              Table staff_roles {
+                                                                                id integer [primary key]
+                                                                                  role_name varchar
+                                                                                  }
+
+
+                                                                                  Table loans {
+                                                                                    id integer [primary key]
+                                                                                      book_item_id integer
+                                                                                        reader_id integer
+                                                                                          staff_id integer
+                                                                                            issue_date date
+                                                                                              due_date date
+                                                                                              }
+
+                                                                                              Table returns {
+                                                                                                id integer [primary key]
+                                                                                                  loan_id integer
+                                                                                                    return_date date
+                                                                                                      staff_id integer
+                                                                                                        condition_after varchar
+                                                                                                        }
+
+                                                                                                        Table fines {
+                                                                                                          id integer [primary key]
+                                                                                                            loan_id integer
+                                                                                                              amount decimal
+                                                                                                                payment_status boolean [default: false]
+                                                                                                                }
+
+
+                                                                                                                Ref: book_authors.book_id > books.id
+                                                                                                                Ref: book_authors.author_id > authors.id
+                                                                                                                Ref: book_genres.book_id > books.id
+                                                                                                                Ref: book_genres.genre_id > genres.id
+                                                                                                                Ref: books.publisher_id > publishers.id
+                                                                                                                Ref: books.language_id > languages.id
+                                                                                                                Ref: book_items.book_id > books.id
+                                                                                                                Ref: book_items.status_id > item_statuses.id
+                                                                                                                Ref: book_items.location_id > locations.id
+                                                                                                                Ref: staff.role_id > staff_roles.id
+                                                                                                                Ref: loans.book_item_id > book_items.id
+                                                                                                                Ref: loans.reader_id > readers.id
+                                                                                                                Ref: loans.staff_id > staff.id
+                                                                                                                Ref: returns.loan_id - loans.id
+                                                                                                                Ref: returns.staff_id > staff.id
+                                                                                                                Ref: fines.loan_id > loans.id

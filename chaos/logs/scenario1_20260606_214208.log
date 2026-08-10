@@ -1,0 +1,81 @@
+[21:42:08] Containers: PATRONI1=m3201_gareevagr-patroni1-1  PATRONI2=m3201_gareevagr-patroni2-1
+[21:42:08] === BEFORE FAILURE ===
+[21:42:09] patroni1 role: replica
+[21:42:09] patroni2 role: primary
+[21:42:09] PostgreSQL via HAProxy:  172.22.0.5       | f
+[21:42:09] 
+[21:42:09] === INJECTING FAILURE: stopping m3201_gareevagr-patroni1-1 ===
+[21:42:11] Stopped at 21:42:11
+[21:42:11] 
+[21:42:11] === MONITORING FAILOVER (60s) ===
+[21:42:14] --- t+5s ---
+[21:42:14] patroni2 role: primary
+[21:42:15] HAProxy→PG:  172.22.0.5       | f
+[21:42:15] *** FAILOVER DETECTED at t+5s ***
+[21:42:18] --- t+9s ---
+[21:42:18] patroni2 role: primary
+[21:42:18] HAProxy→PG:  172.22.0.5       | f
+[21:42:21] --- t+12s ---
+[21:42:21] patroni2 role: primary
+[21:42:22] HAProxy→PG:  172.22.0.5       | f
+[21:42:25] --- t+16s ---
+[21:42:25] patroni2 role: primary
+[21:42:25] HAProxy→PG:  172.22.0.5       | f
+[21:42:28] --- t+19s ---
+[21:42:28] patroni2 role: primary
+[21:42:29] HAProxy→PG:  172.22.0.5       | f
+[21:42:32] --- t+23s ---
+[21:42:32] patroni2 role: primary
+[21:42:32] HAProxy→PG:  172.22.0.5       | f
+[21:42:35] --- t+26s ---
+[21:42:35] patroni2 role: primary
+[21:42:36] HAProxy→PG:  172.22.0.5       | f
+[21:42:39] --- t+30s ---
+[21:42:39] patroni2 role: primary
+[21:42:39] HAProxy→PG:  172.22.0.5       | f
+[21:42:43] --- t+33s ---
+[21:42:43] patroni2 role: primary
+[21:42:43] HAProxy→PG:  172.22.0.5       | f
+[21:42:46] --- t+37s ---
+[21:42:46] patroni2 role: primary
+[21:42:47] HAProxy→PG:  172.22.0.5       | f
+[21:42:50] --- t+41s ---
+[21:42:50] patroni2 role: primary
+[21:42:50] HAProxy→PG:  172.22.0.5       | f
+[21:42:53] --- t+44s ---
+[21:42:53] patroni2 role: primary
+[21:42:54] HAProxy→PG:  172.22.0.5       | f
+[21:42:57] --- t+48s ---
+[21:42:57] patroni2 role: primary
+[21:42:57] HAProxy→PG:  172.22.0.5       | f
+[21:43:00] --- t+51s ---
+[21:43:00] patroni2 role: primary
+[21:43:01] HAProxy→PG:  172.22.0.5       | f
+[21:43:04] --- t+55s ---
+[21:43:04] patroni2 role: primary
+[21:43:04] HAProxy→PG:  172.22.0.5       | f
+[21:43:07] --- t+58s ---
+[21:43:07] patroni2 role: primary
+[21:43:08] HAProxy→PG:  172.22.0.5       | f
+[21:43:11] --- t+62s ---
+[21:43:11] patroni2 role: primary
+[21:43:11] HAProxy→PG:  172.22.0.5       | f
+[21:43:14] --- t+65s ---
+[21:43:15] patroni2 role: primary
+[21:43:15] HAProxy→PG:  172.22.0.5       | f
+[21:43:18] --- t+69s ---
+[21:43:18] patroni2 role: primary
+[21:43:19] HAProxy→PG:  172.22.0.5       | f
+[21:43:22] --- t+73s ---
+[21:43:22] patroni2 role: primary
+[21:43:22] HAProxy→PG:  172.22.0.5       | f
+[21:43:22] 
+[21:43:22] === RECOVERY: starting m3201_gareevagr-patroni1-1 ===
+[21:43:23] Waiting 30s for rejoin...
+[21:43:53] patroni1 role: replica
+[21:43:53] patroni2 role: primary
+[21:43:53] PostgreSQL after recovery:  172.22.0.5       | f
+[21:43:53] 
+[21:43:53] === SUMMARY ===
+[21:43:53] ✅ Failover SUCCEEDED in 5s
+[21:43:53] Log: chaos/logs/scenario1_20260606_214208.log

@@ -1,0 +1,189 @@
+[22:45:40] Containers: ETCD=m3201_gareevagr-etcd-1  PATRONI1=m3201_gareevagr-patroni1-1  PATRONI2=m3201_gareevagr-patroni2-1
+[22:45:40] === BEFORE FAILURE ===
+[22:45:40] etcd health: 127.0.0.1:2379 is healthy: successfully committed proposal: took = 2.106041ms
+[22:45:40] patroni1: {"state": "running", "postmaster_start_time": "2026-06-06 19:44:21.995969+00:00", "role": "replica", "server_version": 170010, "xlog": {"received_location": 64211192, "replayed_location": 64211192, "replayed_timestamp": null, "paused": false}, "timeline": 2, "replication_state": "streaming", "dcs_last_seen": 1780775133, "database_system_identifier": "7648346050638037039", "patroni": {"version": "4.1.3", "scope": "library-cluster", "name": "patroni1"}}
+[22:45:40] patroni2: {"state": "running", "postmaster_start_time": "2026-06-06 18:47:48.213519+00:00", "role": "primary", "server_version": 170010, "xlog": {"location": 64211192}, "timeline": 2, "replication": [{"usename": "replicator", "application_name": "patroni1", "client_addr": "172.22.0.4", "state": "streaming", "sync_state": "async", "sync_priority": 0}], "dcs_last_seen": 1780775139, "database_system_identifier": "7648346050638037039", "patroni": {"version": "4.1.3", "scope": "library-cluster", "name": "patroni2"}}
+[22:45:40] patroni1 dcs_last_seen: 
+[22:45:40] patroni2 dcs_last_seen: 
+[22:45:41] PostgreSQL:  ok       | f
+[22:45:41] 
+[22:45:41] === INJECTING FAILURE: stopping etcd ===
+[22:45:41] etcd stopped at 22:45:41
+[22:45:42] 
+[22:45:42] === MONITORING without DCS (60s) ===
+[22:45:45] --- t+4s ---
+[22:45:45] patroni1: {"state": "running", "postmaster_start_time": "2026-06-06 19:44:21.995969+00:00", "role": "replica", "server_version": 170010, "xlog": {"received_location": 64211192, "replayed_location": 64211192, "replayed_timestamp": null, "paused": false}, "timeline": 2, "replication_state": "streaming", "dcs_last_seen": 1780775133, "database_system_identifier": "7648346050638037039", "patroni": {"version": "4.1.3", "scope": "library-cluster", "name": "patroni1"}}
+[22:45:45] patroni2: {"state": "running", "postmaster_start_time": "2026-06-06 18:47:48.213519+00:00", "role": "primary", "server_version": 170010, "xlog": {"location": 64211192}, "timeline": 2, "replication": [{"usename": "replicator", "application_name": "patroni1", "client_addr": "172.22.0.4", "state": "streaming", "sync_state": "async", "sync_priority": 0}], "dcs_last_seen": 1780775139, "database_system_identifier": "7648346050638037039", "patroni": {"version": "4.1.3", "scope": "library-cluster", "name": "patroni2"}}
+[22:45:45] patroni1 dcs_last_seen: 
+[22:45:45] patroni2 dcs_last_seen: 
+[22:45:45] HAProxy→PG:  ok       | f
+[22:45:48] --- t+7s ---
+[22:45:48] patroni1: {"state": "running", "postmaster_start_time": "2026-06-06 19:44:21.995969+00:00", "role": "replica", "server_version": 170010, "xlog": {"received_location": 64211192, "replayed_location": 64211192, "replayed_timestamp": null, "paused": false}, "timeline": 2, "replication_state": "streaming", "dcs_last_seen": 1780775133, "database_system_identifier": "7648346050638037039", "patroni": {"version": "4.1.3", "scope": "library-cluster", "name": "patroni1"}}
+[22:45:49] patroni2: {"state": "running", "postmaster_start_time": "2026-06-06 18:47:48.213519+00:00", "role": "primary", "server_version": 170010, "xlog": {"location": 64211192}, "timeline": 2, "replication": [{"usename": "replicator", "application_name": "patroni1", "client_addr": "172.22.0.4", "state": "streaming", "sync_state": "async", "sync_priority": 0}], "dcs_last_seen": 1780775139, "database_system_identifier": "7648346050638037039", "patroni": {"version": "4.1.3", "scope": "library-cluster", "name": "patroni2"}}
+[22:45:49] patroni1 dcs_last_seen: 
+[22:45:49] patroni2 dcs_last_seen: 
+[22:45:49] HAProxy→PG:  ok       | f
+[22:45:52] --- t+11s ---
+[22:45:52] patroni1: {"state": "running", "postmaster_start_time": "2026-06-06 19:44:21.995969+00:00", "role": "replica", "server_version": 170010, "xlog": {"received_location": 64211192, "replayed_location": 64211192, "replayed_timestamp": null, "paused": false}, "timeline": 2, "replication_state": "streaming", "dcs_last_seen": 1780775133, "database_system_identifier": "7648346050638037039", "patroni": {"version": "4.1.3", "scope": "library-cluster", "name": "patroni1"}}
+[22:45:52] patroni2: {"state": "running", "postmaster_start_time": "2026-06-06 18:47:48.213519+00:00", "role": "primary", "server_version": 170010, "xlog": {"location": 64211192}, "timeline": 2, "replication": [{"usename": "replicator", "application_name": "patroni1", "client_addr": "172.22.0.4", "state": "streaming", "sync_state": "async", "sync_priority": 0}], "dcs_last_seen": 1780775139, "database_system_identifier": "7648346050638037039", "patroni": {"version": "4.1.3", "scope": "library-cluster", "name": "patroni2"}}
+[22:45:52] patroni1 dcs_last_seen: 
+[22:45:53] patroni2 dcs_last_seen: 
+[22:45:53] HAProxy→PG:  ok       | f
+[22:45:56] --- t+15s ---
+[22:45:56] patroni1: {"state": "running", "postmaster_start_time": "2026-06-06 19:44:21.995969+00:00", "role": "replica", "server_version": 170010, "xlog": {"received_location": 64211192, "replayed_location": 64211192, "replayed_timestamp": null, "paused": false}, "timeline": 2, "replication_state": "streaming", "cluster_unlocked": true, "dcs_last_seen": 1780775133, "database_system_identifier": "7648346050638037039", "patroni": {"version": "4.1.3", "scope": "library-cluster", "name": "patroni1"}}
+[22:45:56] patroni2: {"state": "running", "postmaster_start_time": "2026-06-06 18:47:48.213519+00:00", "role": "primary", "server_version": 170010, "xlog": {"location": 64211192}, "timeline": 2, "replication": [{"usename": "replicator", "application_name": "patroni1", "client_addr": "172.22.0.4", "state": "streaming", "sync_state": "async", "sync_priority": 0}], "dcs_last_seen": 1780775139, "database_system_identifier": "7648346050638037039", "patroni": {"version": "4.1.3", "scope": "library-cluster", "name": "patroni2"}}
+[22:45:56] patroni1 dcs_last_seen: 
+[22:45:56] patroni2 dcs_last_seen: 
+[22:45:57] HAProxy→PG:  ok       | f
+[22:46:00] --- t+19s ---
+[22:46:00] patroni1: {"state": "running", "postmaster_start_time": "2026-06-06 19:44:21.995969+00:00", "role": "replica", "server_version": 170010, "xlog": {"received_location": 64211312, "replayed_location": 64211312, "replayed_timestamp": null, "paused": false}, "timeline": 2, "cluster_unlocked": true, "dcs_last_seen": 1780775133, "database_system_identifier": "7648346050638037039", "patroni": {"version": "4.1.3", "scope": "library-cluster", "name": "patroni1"}}
+[22:46:00] patroni2: {"state": "stopping", "role": "primary", "cluster_unlocked": true, "dcs_last_seen": 1780775139, "database_system_identifier": "7648346050638037039", "patroni": {"version": "4.1.3", "scope": "library-cluster", "name": "patroni2"}}
+[22:46:00] patroni1 dcs_last_seen: 
+[22:46:00] patroni2 dcs_last_seen: 
+[22:46:01] HAProxy→PG:  ok       | t
+[22:46:05] --- t+23s ---
+[22:46:05] patroni1: {"state": "running", "postmaster_start_time": "2026-06-06 19:44:21.995969+00:00", "role": "replica", "server_version": 170010, "xlog": {"received_location": 64211312, "replayed_location": 64211312, "replayed_timestamp": null, "paused": false}, "timeline": 2, "replication_state": "streaming", "cluster_unlocked": true, "dcs_last_seen": 1780775133, "database_system_identifier": "7648346050638037039", "patroni": {"version": "4.1.3", "scope": "library-cluster", "name": "patroni1"}}
+[22:46:05] patroni2: {"state": "running", "postmaster_start_time": "2026-06-06 19:46:00.947219+00:00", "role": "replica", "server_version": 170010, "xlog": {"received_location": 64211312, "replayed_location": 64211312, "replayed_timestamp": null, "paused": false}, "timeline": 2, "replication": [{"usename": "replicator", "application_name": "patroni1", "client_addr": "172.22.0.4", "state": "streaming", "sync_state": "async", "sync_priority": 0}], "cluster_unlocked": true, "dcs_last_seen": 1780775139, "database_system_identifier": "7648346050638037039", "patroni": {"version": "4.1.3", "scope": "library-cluster", "name": "patroni2"}}
+[22:46:05] patroni1 dcs_last_seen: 
+[22:46:05] patroni2 dcs_last_seen: 
+[22:46:05] HAProxy→PG:  ok       | t
+[22:46:08] --- t+27s ---
+[22:46:09] patroni1: {"state": "running", "postmaster_start_time": "2026-06-06 19:44:21.995969+00:00", "role": "replica", "server_version": 170010, "xlog": {"received_location": 64211312, "replayed_location": 64211312, "replayed_timestamp": null, "paused": false}, "timeline": 2, "replication_state": "streaming", "cluster_unlocked": true, "dcs_last_seen": 1780775133, "database_system_identifier": "7648346050638037039", "patroni": {"version": "4.1.3", "scope": "library-cluster", "name": "patroni1"}}
+[22:46:09] patroni2: {"state": "running", "postmaster_start_time": "2026-06-06 19:46:00.947219+00:00", "role": "replica", "server_version": 170010, "xlog": {"received_location": 64211312, "replayed_location": 64211312, "replayed_timestamp": null, "paused": false}, "timeline": 2, "replication": [{"usename": "replicator", "application_name": "patroni1", "client_addr": "172.22.0.4", "state": "streaming", "sync_state": "async", "sync_priority": 0}], "cluster_unlocked": true, "dcs_last_seen": 1780775139, "database_system_identifier": "7648346050638037039", "patroni": {"version": "4.1.3", "scope": "library-cluster", "name": "patroni2"}}
+[22:46:09] patroni1 dcs_last_seen: 
+[22:46:09] patroni2 dcs_last_seen: 
+[22:46:09] HAProxy→PG: psql: error: connection to server at "haproxy" (172.22.0.6), port 5000 failed: server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+CONNECTION FAILED
+[22:46:09] >>> Attempting manual failover WITHOUT DCS...
+[22:46:19] Failover result: request failed
+[22:46:22] --- t+41s ---
+[22:46:22] patroni1: {"state": "running", "postmaster_start_time": "2026-06-06 19:44:21.995969+00:00", "role": "replica", "server_version": 170010, "xlog": {"received_location": 64211312, "replayed_location": 64211312, "replayed_timestamp": null, "paused": false}, "timeline": 2, "replication_state": "streaming", "cluster_unlocked": true, "dcs_last_seen": 1780775133, "database_system_identifier": "7648346050638037039", "patroni": {"version": "4.1.3", "scope": "library-cluster", "name": "patroni1"}}
+[22:46:23] patroni2: {"state": "running", "postmaster_start_time": "2026-06-06 19:46:00.947219+00:00", "role": "replica", "server_version": 170010, "xlog": {"received_location": 64211312, "replayed_location": 64211312, "replayed_timestamp": null, "paused": false}, "timeline": 2, "replication": [{"usename": "replicator", "application_name": "patroni1", "client_addr": "172.22.0.4", "state": "streaming", "sync_state": "async", "sync_priority": 0}], "cluster_unlocked": true, "dcs_last_seen": 1780775139, "database_system_identifier": "7648346050638037039", "patroni": {"version": "4.1.3", "scope": "library-cluster", "name": "patroni2"}}
+[22:46:23] patroni1 dcs_last_seen: 
+[22:46:23] patroni2 dcs_last_seen: 
+[22:46:23] HAProxy→PG: psql: error: connection to server at "haproxy" (172.22.0.6), port 5000 failed: server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+CONNECTION FAILED
+[22:46:26] --- t+45s ---
+[22:46:26] patroni1: {"state": "running", "postmaster_start_time": "2026-06-06 19:44:21.995969+00:00", "role": "replica", "server_version": 170010, "xlog": {"received_location": 64211312, "replayed_location": 64211312, "replayed_timestamp": null, "paused": false}, "timeline": 2, "replication_state": "streaming", "cluster_unlocked": true, "dcs_last_seen": 1780775133, "database_system_identifier": "7648346050638037039", "patroni": {"version": "4.1.3", "scope": "library-cluster", "name": "patroni1"}}
+[22:46:26] patroni2: {"state": "running", "postmaster_start_time": "2026-06-06 19:46:00.947219+00:00", "role": "replica", "server_version": 170010, "xlog": {"received_location": 64211312, "replayed_location": 64211312, "replayed_timestamp": null, "paused": false}, "timeline": 2, "replication": [{"usename": "replicator", "application_name": "patroni1", "client_addr": "172.22.0.4", "state": "streaming", "sync_state": "async", "sync_priority": 0}], "cluster_unlocked": true, "dcs_last_seen": 1780775139, "database_system_identifier": "7648346050638037039", "patroni": {"version": "4.1.3", "scope": "library-cluster", "name": "patroni2"}}
+[22:46:26] patroni1 dcs_last_seen: 
+[22:46:27] patroni2 dcs_last_seen: 
+[22:46:27] HAProxy→PG: psql: error: connection to server at "haproxy" (172.22.0.6), port 5000 failed: server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+CONNECTION FAILED
+[22:46:30] --- t+49s ---
+[22:46:30] patroni1: {"state": "running", "postmaster_start_time": "2026-06-06 19:44:21.995969+00:00", "role": "replica", "server_version": 170010, "xlog": {"received_location": 64211312, "replayed_location": 64211312, "replayed_timestamp": null, "paused": false}, "timeline": 2, "replication_state": "streaming", "cluster_unlocked": true, "dcs_last_seen": 1780775133, "database_system_identifier": "7648346050638037039", "patroni": {"version": "4.1.3", "scope": "library-cluster", "name": "patroni1"}}
+[22:46:30] patroni2: {"state": "running", "postmaster_start_time": "2026-06-06 19:46:00.947219+00:00", "role": "replica", "server_version": 170010, "xlog": {"received_location": 64211312, "replayed_location": 64211312, "replayed_timestamp": null, "paused": false}, "timeline": 2, "replication": [{"usename": "replicator", "application_name": "patroni1", "client_addr": "172.22.0.4", "state": "streaming", "sync_state": "async", "sync_priority": 0}], "cluster_unlocked": true, "dcs_last_seen": 1780775139, "database_system_identifier": "7648346050638037039", "patroni": {"version": "4.1.3", "scope": "library-cluster", "name": "patroni2"}}
+[22:46:30] patroni1 dcs_last_seen: 
+[22:46:30] patroni2 dcs_last_seen: 
+[22:46:31] HAProxy→PG: psql: error: connection to server at "haproxy" (172.22.0.6), port 5000 failed: server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+CONNECTION FAILED
+[22:46:34] --- t+53s ---
+[22:46:34] patroni1: {"state": "running", "postmaster_start_time": "2026-06-06 19:44:21.995969+00:00", "role": "replica", "server_version": 170010, "xlog": {"received_location": 64211312, "replayed_location": 64211312, "replayed_timestamp": null, "paused": false}, "timeline": 2, "replication_state": "streaming", "cluster_unlocked": true, "dcs_last_seen": 1780775133, "database_system_identifier": "7648346050638037039", "patroni": {"version": "4.1.3", "scope": "library-cluster", "name": "patroni1"}}
+[22:46:34] patroni2: {"state": "running", "postmaster_start_time": "2026-06-06 19:46:00.947219+00:00", "role": "replica", "server_version": 170010, "xlog": {"received_location": 64211312, "replayed_location": 64211312, "replayed_timestamp": null, "paused": false}, "timeline": 2, "replication": [{"usename": "replicator", "application_name": "patroni1", "client_addr": "172.22.0.4", "state": "streaming", "sync_state": "async", "sync_priority": 0}], "cluster_unlocked": true, "dcs_last_seen": 1780775139, "database_system_identifier": "7648346050638037039", "patroni": {"version": "4.1.3", "scope": "library-cluster", "name": "patroni2"}}
+[22:46:34] patroni1 dcs_last_seen: 
+[22:46:34] patroni2 dcs_last_seen: 
+[22:46:35] HAProxy→PG: psql: error: connection to server at "haproxy" (172.22.0.6), port 5000 failed: server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+CONNECTION FAILED
+[22:46:38] --- t+57s ---
+[22:46:38] patroni1: {"state": "running", "postmaster_start_time": "2026-06-06 19:44:21.995969+00:00", "role": "replica", "server_version": 170010, "xlog": {"received_location": 64211312, "replayed_location": 64211312, "replayed_timestamp": null, "paused": false}, "timeline": 2, "replication_state": "streaming", "cluster_unlocked": true, "dcs_last_seen": 1780775133, "database_system_identifier": "7648346050638037039", "patroni": {"version": "4.1.3", "scope": "library-cluster", "name": "patroni1"}}
+[22:46:38] patroni2: {"state": "running", "postmaster_start_time": "2026-06-06 19:46:00.947219+00:00", "role": "replica", "server_version": 170010, "xlog": {"received_location": 64211312, "replayed_location": 64211312, "replayed_timestamp": null, "paused": false}, "timeline": 2, "replication": [{"usename": "replicator", "application_name": "patroni1", "client_addr": "172.22.0.4", "state": "streaming", "sync_state": "async", "sync_priority": 0}], "cluster_unlocked": true, "dcs_last_seen": 1780775139, "database_system_identifier": "7648346050638037039", "patroni": {"version": "4.1.3", "scope": "library-cluster", "name": "patroni2"}}
+[22:46:38] patroni1 dcs_last_seen: 
+[22:46:38] patroni2 dcs_last_seen: 
+[22:46:38] HAProxy→PG: psql: error: connection to server at "haproxy" (172.22.0.6), port 5000 failed: server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+CONNECTION FAILED
+[22:46:41] --- t+60s ---
+[22:46:41] patroni1: {"state": "running", "postmaster_start_time": "2026-06-06 19:44:21.995969+00:00", "role": "replica", "server_version": 170010, "xlog": {"received_location": 64211312, "replayed_location": 64211312, "replayed_timestamp": null, "paused": false}, "timeline": 2, "replication_state": "streaming", "cluster_unlocked": true, "dcs_last_seen": 1780775133, "database_system_identifier": "7648346050638037039", "patroni": {"version": "4.1.3", "scope": "library-cluster", "name": "patroni1"}}
+[22:46:42] patroni2: {"state": "running", "postmaster_start_time": "2026-06-06 19:46:00.947219+00:00", "role": "replica", "server_version": 170010, "xlog": {"received_location": 64211312, "replayed_location": 64211312, "replayed_timestamp": null, "paused": false}, "timeline": 2, "replication": [{"usename": "replicator", "application_name": "patroni1", "client_addr": "172.22.0.4", "state": "streaming", "sync_state": "async", "sync_priority": 0}], "cluster_unlocked": true, "dcs_last_seen": 1780775139, "database_system_identifier": "7648346050638037039", "patroni": {"version": "4.1.3", "scope": "library-cluster", "name": "patroni2"}}
+[22:46:42] patroni1 dcs_last_seen: 
+[22:46:42] patroni2 dcs_last_seen: 
+[22:46:42] HAProxy→PG: psql: error: connection to server at "haproxy" (172.22.0.6), port 5000 failed: server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+CONNECTION FAILED
+[22:46:45] --- t+64s ---
+[22:46:45] patroni1: {"state": "running", "postmaster_start_time": "2026-06-06 19:44:21.995969+00:00", "role": "replica", "server_version": 170010, "xlog": {"received_location": 64211312, "replayed_location": 64211312, "replayed_timestamp": null, "paused": false}, "timeline": 2, "replication_state": "streaming", "cluster_unlocked": true, "dcs_last_seen": 1780775133, "database_system_identifier": "7648346050638037039", "patroni": {"version": "4.1.3", "scope": "library-cluster", "name": "patroni1"}}
+[22:46:45] patroni2: {"state": "running", "postmaster_start_time": "2026-06-06 19:46:00.947219+00:00", "role": "replica", "server_version": 170010, "xlog": {"received_location": 64211312, "replayed_location": 64211312, "replayed_timestamp": null, "paused": false}, "timeline": 2, "replication": [{"usename": "replicator", "application_name": "patroni1", "client_addr": "172.22.0.4", "state": "streaming", "sync_state": "async", "sync_priority": 0}], "cluster_unlocked": true, "dcs_last_seen": 1780775139, "database_system_identifier": "7648346050638037039", "patroni": {"version": "4.1.3", "scope": "library-cluster", "name": "patroni2"}}
+[22:46:45] patroni1 dcs_last_seen: 
+[22:46:46] patroni2 dcs_last_seen: 
+[22:46:46] HAProxy→PG: psql: error: connection to server at "haproxy" (172.22.0.6), port 5000 failed: server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+CONNECTION FAILED
+[22:46:49] --- t+68s ---
+[22:46:49] patroni1: {"state": "running", "postmaster_start_time": "2026-06-06 19:44:21.995969+00:00", "role": "replica", "server_version": 170010, "xlog": {"received_location": 64211312, "replayed_location": 64211312, "replayed_timestamp": null, "paused": false}, "timeline": 2, "replication_state": "streaming", "cluster_unlocked": true, "dcs_last_seen": 1780775133, "database_system_identifier": "7648346050638037039", "patroni": {"version": "4.1.3", "scope": "library-cluster", "name": "patroni1"}}
+[22:46:49] patroni2: {"state": "running", "postmaster_start_time": "2026-06-06 19:46:00.947219+00:00", "role": "replica", "server_version": 170010, "xlog": {"received_location": 64211312, "replayed_location": 64211312, "replayed_timestamp": null, "paused": false}, "timeline": 2, "replication": [{"usename": "replicator", "application_name": "patroni1", "client_addr": "172.22.0.4", "state": "streaming", "sync_state": "async", "sync_priority": 0}], "cluster_unlocked": true, "dcs_last_seen": 1780775139, "database_system_identifier": "7648346050638037039", "patroni": {"version": "4.1.3", "scope": "library-cluster", "name": "patroni2"}}
+[22:46:49] patroni1 dcs_last_seen: 
+[22:46:49] patroni2 dcs_last_seen: 
+[22:46:50] HAProxy→PG: psql: error: connection to server at "haproxy" (172.22.0.6), port 5000 failed: server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+CONNECTION FAILED
+[22:46:53] --- t+72s ---
+[22:46:53] patroni1: {"state": "running", "postmaster_start_time": "2026-06-06 19:44:21.995969+00:00", "role": "replica", "server_version": 170010, "xlog": {"received_location": 64211312, "replayed_location": 64211312, "replayed_timestamp": null, "paused": false}, "timeline": 2, "replication_state": "streaming", "cluster_unlocked": true, "dcs_last_seen": 1780775133, "database_system_identifier": "7648346050638037039", "patroni": {"version": "4.1.3", "scope": "library-cluster", "name": "patroni1"}}
+[22:46:53] patroni2: {"state": "running", "postmaster_start_time": "2026-06-06 19:46:00.947219+00:00", "role": "replica", "server_version": 170010, "xlog": {"received_location": 64211312, "replayed_location": 64211312, "replayed_timestamp": null, "paused": false}, "timeline": 2, "replication": [{"usename": "replicator", "application_name": "patroni1", "client_addr": "172.22.0.4", "state": "streaming", "sync_state": "async", "sync_priority": 0}], "cluster_unlocked": true, "dcs_last_seen": 1780775139, "database_system_identifier": "7648346050638037039", "patroni": {"version": "4.1.3", "scope": "library-cluster", "name": "patroni2"}}
+[22:46:53] patroni1 dcs_last_seen: 
+[22:46:53] patroni2 dcs_last_seen: 
+[22:46:53] HAProxy→PG: psql: error: connection to server at "haproxy" (172.22.0.6), port 5000 failed: server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+CONNECTION FAILED
+[22:46:56] --- t+75s ---
+[22:46:57] patroni1: {"state": "running", "postmaster_start_time": "2026-06-06 19:44:21.995969+00:00", "role": "replica", "server_version": 170010, "xlog": {"received_location": 64211312, "replayed_location": 64211312, "replayed_timestamp": null, "paused": false}, "timeline": 2, "replication_state": "streaming", "cluster_unlocked": true, "dcs_last_seen": 1780775133, "database_system_identifier": "7648346050638037039", "patroni": {"version": "4.1.3", "scope": "library-cluster", "name": "patroni1"}}
+[22:46:57] patroni2: {"state": "running", "postmaster_start_time": "2026-06-06 19:46:00.947219+00:00", "role": "replica", "server_version": 170010, "xlog": {"received_location": 64211312, "replayed_location": 64211312, "replayed_timestamp": null, "paused": false}, "timeline": 2, "replication": [{"usename": "replicator", "application_name": "patroni1", "client_addr": "172.22.0.4", "state": "streaming", "sync_state": "async", "sync_priority": 0}], "cluster_unlocked": true, "dcs_last_seen": 1780775139, "database_system_identifier": "7648346050638037039", "patroni": {"version": "4.1.3", "scope": "library-cluster", "name": "patroni2"}}
+[22:46:57] patroni1 dcs_last_seen: 
+[22:46:57] patroni2 dcs_last_seen: 
+[22:46:57] HAProxy→PG: psql: error: connection to server at "haproxy" (172.22.0.6), port 5000 failed: server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+CONNECTION FAILED
+[22:47:00] --- t+79s ---
+[22:47:00] patroni1: {"state": "running", "postmaster_start_time": "2026-06-06 19:44:21.995969+00:00", "role": "replica", "server_version": 170010, "xlog": {"received_location": 64211312, "replayed_location": 64211312, "replayed_timestamp": null, "paused": false}, "timeline": 2, "replication_state": "streaming", "cluster_unlocked": true, "dcs_last_seen": 1780775133, "database_system_identifier": "7648346050638037039", "patroni": {"version": "4.1.3", "scope": "library-cluster", "name": "patroni1"}}
+[22:47:00] patroni2: {"state": "running", "postmaster_start_time": "2026-06-06 19:46:00.947219+00:00", "role": "replica", "server_version": 170010, "xlog": {"received_location": 64211312, "replayed_location": 64211312, "replayed_timestamp": null, "paused": false}, "timeline": 2, "replication": [{"usename": "replicator", "application_name": "patroni1", "client_addr": "172.22.0.4", "state": "streaming", "sync_state": "async", "sync_priority": 0}], "cluster_unlocked": true, "dcs_last_seen": 1780775139, "database_system_identifier": "7648346050638037039", "patroni": {"version": "4.1.3", "scope": "library-cluster", "name": "patroni2"}}
+[22:47:01] patroni1 dcs_last_seen: 
+[22:47:01] patroni2 dcs_last_seen: 
+[22:47:01] HAProxy→PG: psql: error: connection to server at "haproxy" (172.22.0.6), port 5000 failed: server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+CONNECTION FAILED
+[22:47:04] --- t+83s ---
+[22:47:04] patroni1: {"state": "running", "postmaster_start_time": "2026-06-06 19:44:21.995969+00:00", "role": "replica", "server_version": 170010, "xlog": {"received_location": 64211312, "replayed_location": 64211312, "replayed_timestamp": null, "paused": false}, "timeline": 2, "replication_state": "streaming", "cluster_unlocked": true, "dcs_last_seen": 1780775133, "database_system_identifier": "7648346050638037039", "patroni": {"version": "4.1.3", "scope": "library-cluster", "name": "patroni1"}}
+[22:47:04] patroni2: {"state": "running", "postmaster_start_time": "2026-06-06 19:46:00.947219+00:00", "role": "replica", "server_version": 170010, "xlog": {"received_location": 64211312, "replayed_location": 64211312, "replayed_timestamp": null, "paused": false}, "timeline": 2, "replication": [{"usename": "replicator", "application_name": "patroni1", "client_addr": "172.22.0.4", "state": "streaming", "sync_state": "async", "sync_priority": 0}], "cluster_unlocked": true, "dcs_last_seen": 1780775139, "database_system_identifier": "7648346050638037039", "patroni": {"version": "4.1.3", "scope": "library-cluster", "name": "patroni2"}}
+[22:47:04] patroni1 dcs_last_seen: 
+[22:47:04] patroni2 dcs_last_seen: 
+[22:47:05] HAProxy→PG: psql: error: connection to server at "haproxy" (172.22.0.6), port 5000 failed: server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+CONNECTION FAILED
+[22:47:08] --- t+87s ---
+[22:47:08] patroni1: {"state": "running", "postmaster_start_time": "2026-06-06 19:44:21.995969+00:00", "role": "replica", "server_version": 170010, "xlog": {"received_location": 64211312, "replayed_location": 64211312, "replayed_timestamp": null, "paused": false}, "timeline": 2, "replication_state": "streaming", "cluster_unlocked": true, "dcs_last_seen": 1780775133, "database_system_identifier": "7648346050638037039", "patroni": {"version": "4.1.3", "scope": "library-cluster", "name": "patroni1"}}
+[22:47:08] patroni2: {"state": "running", "postmaster_start_time": "2026-06-06 19:46:00.947219+00:00", "role": "replica", "server_version": 170010, "xlog": {"received_location": 64211312, "replayed_location": 64211312, "replayed_timestamp": null, "paused": false}, "timeline": 2, "replication": [{"usename": "replicator", "application_name": "patroni1", "client_addr": "172.22.0.4", "state": "streaming", "sync_state": "async", "sync_priority": 0}], "cluster_unlocked": true, "dcs_last_seen": 1780775139, "database_system_identifier": "7648346050638037039", "patroni": {"version": "4.1.3", "scope": "library-cluster", "name": "patroni2"}}
+[22:47:08] patroni1 dcs_last_seen: 
+[22:47:08] patroni2 dcs_last_seen: 
+[22:47:09] HAProxy→PG: psql: error: connection to server at "haproxy" (172.22.0.6), port 5000 failed: server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+CONNECTION FAILED
+[22:47:09] 
+[22:47:09] === RECOVERY: starting etcd ===
+[22:47:09] Waiting 30s for Patroni to reconnect...
+[22:47:40] etcd health: 127.0.0.1:2379 is healthy: successfully committed proposal: took = 1.860265ms
+[22:47:40] patroni1: {"state": "running", "postmaster_start_time": "2026-06-06 19:44:21.995969+00:00", "role": "replica", "server_version": 170010, "xlog": {"received_location": 64211688, "replayed_location": 64211688, "replayed_timestamp": null, "paused": false}, "timeline": 3, "replication_state": "streaming", "dcs_last_seen": 1780775252, "database_system_identifier": "7648346050638037039", "patroni": {"version": "4.1.3", "scope": "library-cluster", "name": "patroni1"}}
+[22:47:40] patroni2: {"state": "running", "postmaster_start_time": "2026-06-06 19:46:00.947219+00:00", "role": "primary", "server_version": 170010, "xlog": {"location": 64211688}, "timeline": 3, "replication": [{"usename": "replicator", "application_name": "patroni1", "client_addr": "172.22.0.4", "state": "streaming", "sync_state": "async", "sync_priority": 0}], "dcs_last_seen": 1780775252, "database_system_identifier": "7648346050638037039", "patroni": {"version": "4.1.3", "scope": "library-cluster", "name": "patroni2"}}
+[22:47:40] patroni1 dcs_last_seen after recovery: 
+[22:47:40] PostgreSQL after recovery:  ok       | f
+[22:47:40] 
+[22:47:40] === SUMMARY ===
+[22:47:40] etcd was isolated for ~60s
+[22:47:40] Log: chaos/logs/scenario2_20260606_224539.log

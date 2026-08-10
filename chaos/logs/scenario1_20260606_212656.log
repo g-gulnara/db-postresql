@@ -1,0 +1,80 @@
+[21:26:56] Containers: PATRONI1=m3201_gareevagr-patroni1-1  PATRONI2=m3201_gareevagr-patroni2-1
+[21:26:56] === BEFORE FAILURE ===
+[21:27:00] patroni1 role: unreachable
+[21:27:03] patroni2 role: unreachable
+[21:27:04] PostgreSQL via HAProxy:  172.22.0.5       | f
+[21:27:04] 
+[21:27:04] === INJECTING FAILURE: stopping m3201_gareevagr-patroni1-1 ===
+[21:27:06] Stopped at 21:27:06
+[21:27:06] 
+[21:27:06] === MONITORING FAILOVER (60s) ===
+[21:27:09] --- t+5s ---
+[21:27:12] patroni2 role: unreachable
+[21:27:13] HAProxy→PG:  172.22.0.5       | f
+[21:27:16] --- t+12s ---
+[21:27:19] patroni2 role: unreachable
+[21:27:19] HAProxy→PG:  172.22.0.5       | f
+[21:27:22] --- t+18s ---
+[21:27:25] patroni2 role: unreachable
+[21:27:26] HAProxy→PG:  172.22.0.5       | f
+[21:27:29] --- t+25s ---
+[21:27:32] patroni2 role: unreachable
+[21:27:32] HAProxy→PG:  172.22.0.5       | f
+[21:27:35] --- t+31s ---
+[21:27:38] patroni2 role: unreachable
+[21:27:39] HAProxy→PG:  172.22.0.5       | f
+[21:27:42] --- t+38s ---
+[21:27:45] patroni2 role: unreachable
+[21:27:45] HAProxy→PG:  172.22.0.5       | f
+[21:27:48] --- t+44s ---
+[21:27:52] patroni2 role: unreachable
+[21:27:52] HAProxy→PG:  172.22.0.5       | f
+[21:27:55] --- t+51s ---
+[21:27:58] patroni2 role: unreachable
+[21:27:59] HAProxy→PG:  172.22.0.5       | f
+[21:28:02] --- t+58s ---
+[21:28:05] patroni2 role: unreachable
+[21:28:05] HAProxy→PG:  172.22.0.5       | f
+[21:28:08] --- t+64s ---
+[21:28:11] patroni2 role: unreachable
+[21:28:12] HAProxy→PG:  172.22.0.5       | f
+[21:28:15] --- t+71s ---
+[21:28:18] patroni2 role: unreachable
+[21:28:18] HAProxy→PG:  172.22.0.5       | f
+[21:28:21] --- t+77s ---
+[21:28:25] patroni2 role: unreachable
+[21:28:25] HAProxy→PG:  172.22.0.5       | f
+[21:28:28] --- t+84s ---
+[21:28:31] patroni2 role: unreachable
+[21:28:32] HAProxy→PG:  172.22.0.5       | f
+[21:28:35] --- t+91s ---
+[21:28:38] patroni2 role: unreachable
+[21:28:38] HAProxy→PG:  172.22.0.5       | f
+[21:28:41] --- t+97s ---
+[21:28:44] patroni2 role: unreachable
+[21:28:45] HAProxy→PG:  172.22.0.5       | f
+[21:28:48] --- t+104s ---
+[21:28:51] patroni2 role: unreachable
+[21:28:51] HAProxy→PG:  172.22.0.5       | f
+[21:28:54] --- t+110s ---
+[21:28:57] patroni2 role: unreachable
+[21:28:58] HAProxy→PG:  172.22.0.5       | f
+[21:29:01] --- t+117s ---
+[21:29:04] patroni2 role: unreachable
+[21:29:04] HAProxy→PG:  172.22.0.5       | f
+[21:29:07] --- t+123s ---
+[21:29:11] patroni2 role: unreachable
+[21:29:11] HAProxy→PG:  172.22.0.5       | f
+[21:29:14] --- t+130s ---
+[21:29:17] patroni2 role: unreachable
+[21:29:17] HAProxy→PG:  172.22.0.5       | f
+[21:29:17] 
+[21:29:18] === RECOVERY: starting m3201_gareevagr-patroni1-1 ===
+[21:29:18] Waiting 30s for rejoin...
+[21:29:51] patroni1 role: unreachable
+[21:29:54] patroni2 role: unreachable
+[21:29:55] PostgreSQL after recovery:  172.22.0.5       | f
+[21:29:55] 
+[21:29:55] === SUMMARY ===
+[21:29:55] ❌ Failover NOT detected within 60s
+[21:29:55] Log: chaos/logs/scenario1_20260606_212656.log

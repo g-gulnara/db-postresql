@@ -1,0 +1,30 @@
+migration:
+  before_version: "5"
+  after_version: "8"
+
+setup:
+  command: "$DOCKER_COMPOSE down -v --remove-orphans && $DOCKER_COMPOSE up -d etcd patroni1 patroni2 haproxy && $DOCKER_COMPOSE run --rm migrations"
+
+benchmark:
+  before_queries: queries_before.sql
+  after_queries: queries_after.sql
+  repeats: 2
+  warmup_iterations: 3
+  iterations: 60
+  concurrency: 2
+  explain: true
+
+report:
+  description:
+    - query: get_reader_loans
+      what: Partial + Covering Index + NOT EXISTS
+      changes: Индексы + переписывание SQL
+      expected: Значительное ускорение OLTP
+    - query: popular_books_analytic
+      what: Materialized View
+      changes: CREATE MATERIALIZED VIEW
+      expected: Сильное ускорение аналитики
+    - query: search_books_by_genre
+      what: Индексы по жанрам
+      changes: b-tree индексы
+      expected: Ускорение JOIN
